@@ -1,0 +1,336 @@
+/* NEON HOST — dashboard.css
+ * Compatível com o WebKit antigo do navegador do PS4:
+ * sem CSS Grid, sem flex gap, sem position sticky.
+ * Temas por blocos direto (sem CSS custom properties, por seguranca). */
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  font: 15px/1.5 "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+/* ============ TEMA: NEON (padrao) ============ */
+body[data-theme="neon"]  { background: #07090d; color: #c9d4e2; }
+body[data-theme="neon"]  .glow     { color: #3df2ff; text-shadow: 0 0 18px rgba(61,242,255,.55); }
+body[data-theme="neon"]  .dot      { background: #3df2ff; box-shadow: 0 0 8px #3df2ff; }
+body[data-theme="neon"]  .btn-start{ background: #0c2b33; border-color: #3df2ff; color: #eafcff;
+                                     box-shadow: 0 0 16px rgba(61,242,255,.35), inset 0 0 12px rgba(61,242,255,.15); }
+body[data-theme="neon"]  .btn-start:hover { background: #12414d; box-shadow: 0 0 26px rgba(61,242,255,.6); }
+body[data-theme="neon"]  .tile:hover      { border-color: #3df2ff; box-shadow: 0 0 14px rgba(61,242,255,.3); }
+body[data-theme="neon"]  .tile-ico        { color: #3df2ff; }
+body[data-theme="neon"]  h2               { border-left-color: #3df2ff; }
+body[data-theme="neon"]  .brand b         { color: #3df2ff; }
+body[data-theme="neon"]  .badge.on        { color: #7cff6b; border-color: rgba(124,255,107,.5); }
+body[data-theme="neon"]  .badge.fw        { color: #3df2ff; border-color: rgba(61,242,255,.5); }
+body[data-theme="neon"]  .badge.bad       { color: #ff6b81; border-color: rgba(255,107,129,.5); }
+body[data-theme="neon"]  .theme-btn.sel   { border-color: #3df2ff; color: #3df2ff; }
+body[data-theme="neon"]  .t-neon  .swatch { background: #3df2ff; }
+
+/* ============ TEMA: RUBI ============ */
+body[data-theme="rubi"]  { background: #0d0709; color: #e2c9cf; }
+body[data-theme="rubi"]  .glow     { color: #ff3d6e; text-shadow: 0 0 18px rgba(255,61,110,.55); }
+body[data-theme="rubi"]  .dot      { background: #ff3d6e; box-shadow: 0 0 8px #ff3d6e; }
+body[data-theme="rubi"]  .btn-start{ background: #33101c; border-color: #ff3d6e; color: #ffeef3;
+                                     box-shadow: 0 0 16px rgba(255,61,110,.35), inset 0 0 12px rgba(255,61,110,.15); }
+body[data-theme="rubi"]  .btn-start:hover { background: #4d1729; box-shadow: 0 0 26px rgba(255,61,110,.6); }
+body[data-theme="rubi"]  .tile:hover      { border-color: #ff3d6e; box-shadow: 0 0 14px rgba(255,61,110,.3); }
+body[data-theme="rubi"]  .tile-ico        { color: #ff3d6e; }
+body[data-theme="rubi"]  h2               { border-left-color: #ff3d6e; }
+body[data-theme="rubi"]  .brand b         { color: #ff3d6e; }
+body[data-theme="rubi"]  .badge.on        { color: #7cff6b; border-color: rgba(124,255,107,.5); }
+body[data-theme="rubi"]  .badge.fw        { color: #ff3d6e; border-color: rgba(255,61,110,.5); }
+body[data-theme="rubi"]  .badge.bad       { color: #ffb04d; border-color: rgba(255,176,77,.5); }
+body[data-theme="rubi"]  .theme-btn.sel   { border-color: #ff3d6e; color: #ff3d6e; }
+body[data-theme="rubi"]  .t-rubi  .swatch { background: #ff3d6e; }
+
+/* ============ TEMA: BRASIL ============ */
+body[data-theme="brasil"] { background: #07100b; color: #cfe2d4; }
+body[data-theme="brasil"] .glow     { color: #ffd23f; text-shadow: 0 0 18px rgba(255,210,63,.5); }
+body[data-theme="brasil"] .dot      { background: #2ee56b; box-shadow: 0 0 8px #2ee56b; }
+body[data-theme="brasil"] .btn-start{ background: #0f2e1a; border-color: #2ee56b; color: #eafff0;
+                                     box-shadow: 0 0 16px rgba(46,229,107,.35), inset 0 0 12px rgba(46,229,107,.15); }
+body[data-theme="brasil"] .btn-start:hover { background: #174726; box-shadow: 0 0 26px rgba(46,229,107,.6); }
+body[data-theme="brasil"] .tile:hover      { border-color: #ffd23f; box-shadow: 0 0 14px rgba(255,210,63,.3); }
+body[data-theme="brasil"] .tile-ico        { color: #ffd23f; }
+body[data-theme="brasil"] h2               { border-left-color: #2ee56b; }
+body[data-theme="brasil"] .brand b         { color: #ffd23f; }
+body[data-theme="brasil"] .badge.on        { color: #7cff6b; border-color: rgba(124,255,107,.5); }
+body[data-theme="brasil"] .badge.fw        { color: #ffd23f; border-color: rgba(255,210,63,.5); }
+body[data-theme="brasil"] .badge.bad       { color: #ff6b81; border-color: rgba(255,107,129,.5); }
+body[data-theme="brasil"] .theme-btn.sel   { border-color: #ffd23f; color: #ffd23f; }
+body[data-theme="brasil"] .t-brasil .swatch { background: linear-gradient(135deg,#2ee56b 55%,#ffd23f 55%); }
+
+/* ============ LAYOUT ============ */
+.topbar {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+  -webkit-align-items: center;
+  align-items: center;
+  padding: 10px 16px;
+  border-bottom: 1px solid #1b2634;
+  background: #0b0f15;
+}
+.brand {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: .18em;
+  color: #e6edf5;
+}
+.brand b { font-weight: 800; }
+.dot {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  margin-right: 7px;
+  border-radius: 50%;
+  vertical-align: 1px;
+}
+.badges { display: block; }
+.badge {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 2px 8px;
+  border: 1px solid #2a3648;
+  border-radius: 3px;
+  font: 11px/1.6 Consolas, "DejaVu Sans Mono", monospace;
+  color: #7b8aa0;
+}
+
+#main { max-width: 940px; margin: 0 auto; padding: 22px 16px 40px; }
+
+.page { display: none; }
+.page.active { display: block; }
+
+/* ============ HERO ============ */
+.hero { text-align: center; padding: 14px 0 6px; }
+.kicker {
+  margin: 0 0 10px;
+  font: 11px/1.5 Consolas, monospace;
+  letter-spacing: .3em;
+  color: #5b6b80;
+}
+.hero h1 {
+  margin: 0;
+  font-size: 44px;
+  line-height: 1.08;
+  font-weight: 800;
+  letter-spacing: .06em;
+  color: #eef3f9;
+}
+.glow { display: inline-block; }
+.sub { margin: 14px 0 0; color: #8b9bb2; font-size: 14px; }
+.sub b { color: #c9d4e2; }
+
+/* ============ CARD DE INICIO ============ */
+.start-card {
+  margin: 26px auto 0;
+  max-width: 480px;
+  padding: 18px 18px 14px;
+  border: 1px solid #1f2b3b;
+  border-radius: 8px;
+  background: #0c1118;
+  text-align: center;
+}
+.card-label {
+  margin: 0 0 10px;
+  font: 10px/1.4 Consolas, monospace;
+  letter-spacing: .3em;
+  color: #5b6b80;
+}
+.payload-pick { margin-bottom: 14px; }
+.opt {
+  display: block;
+  margin: 0 0 8px;
+  padding: 9px 12px;
+  border: 1px solid #223044;
+  border-radius: 6px;
+  background: #0a0e14;
+  cursor: pointer;
+  text-align: left;
+}
+.opt input { margin-right: 9px; }
+.opt-body b { display: block; font-size: 14px; color: #dfe7f1; }
+.opt-body small { color: #66778f; font-size: 12px; }
+.opt:hover { border-color: #33465f; }
+
+.btn-start {
+  display: block;
+  width: 100%;
+  margin: 6px 0 12px;
+  padding: 15px 10px;
+  border: 2px solid #3df2ff;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  cursor: pointer;
+  -webkit-transition: box-shadow .2s;
+  transition: box-shadow .2s;
+}
+.auto-line {
+  display: block;
+  font-size: 13px;
+  color: #8b9bb2;
+  cursor: pointer;
+}
+.note {
+  min-height: 1em;
+  margin: 6px 0 0;
+  font: 12px/1.5 Consolas, monospace;
+  color: #7cff6b;
+}
+.note.warn { color: #ffb04d; }
+
+/* ============ TILES ============ */
+.grid {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin: 22px -7px 0;
+}
+.tile {
+  -webkit-flex: 1 1 44%;
+  flex: 1 1 44%;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+  margin: 7px;
+  padding: 14px;
+  border: 1px solid #1f2b3b;
+  border-radius: 8px;
+  background: #0c1118;
+  color: #c9d4e2;
+  cursor: pointer;
+  text-align: left;
+  font-size: 15px;
+}
+.tile:hover { background: #10161f; }
+.tile-ico {
+  display: inline-block;
+  width: 34px;
+  margin-right: 10px;
+  font-size: 20px;
+  text-align: center;
+}
+.tile-txt b { display: block; font-size: 14px; color: #e6edf5; }
+.tile-txt small { color: #66778f; font-size: 12px; }
+
+/* ============ PAGINAS INTERNAS ============ */
+.page h2 {
+  margin: 4px 0 16px;
+  padding-left: 12px;
+  border-left: 4px solid #3df2ff;
+  font-size: 22px;
+  letter-spacing: .05em;
+  color: #eef3f9;
+}
+.list { margin-bottom: 10px; }
+.item {
+  margin-bottom: 8px;
+  padding: 11px 14px;
+  border: 1px solid #1f2b3b;
+  border-radius: 6px;
+  background: #0c1118;
+}
+.item b { display: block; font-size: 14px; color: #dfe7f1; }
+.item span { color: #66778f; font-size: 13px; }
+.hint { color: #5b6b80; font-size: 12.5px; }
+.hint b { color: #8b9bb2; }
+
+.diag {
+  margin: 0 0 12px;
+  padding: 12px;
+  border: 1px solid #1f2b3b;
+  border-radius: 6px;
+  background: #080b10;
+  color: #9fd7b4;
+  font: 12px/1.6 Consolas, "DejaVu Sans Mono", monospace;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.row { margin-bottom: 10px; }
+.btn-small {
+  margin-right: 8px;
+  padding: 7px 14px;
+  border: 1px solid #2a3648;
+  border-radius: 5px;
+  background: #10161f;
+  color: #c9d4e2;
+  font-size: 13px;
+  cursor: pointer;
+}
+.btn-small:hover { border-color: #3df2ff; }
+
+.btn-back {
+  margin-top: 8px;
+  padding: 9px 18px;
+  border: 1px solid #2a3648;
+  border-radius: 5px;
+  background: #10161f;
+  color: #c9d4e2;
+  font-size: 14px;
+  cursor: pointer;
+}
+.btn-back:hover { border-color: #3df2ff; }
+
+/* ============ TEMAS ============ */
+.theme-list { margin-bottom: 8px; }
+.theme-btn {
+  display: block;
+  width: 100%;
+  max-width: 340px;
+  margin: 0 0 10px;
+  padding: 12px 14px;
+  border: 1px solid #223044;
+  border-radius: 6px;
+  background: #0c1118;
+  color: #c9d4e2;
+  font-size: 15px;
+  text-align: left;
+  cursor: pointer;
+}
+.theme-btn .swatch {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  margin-right: 10px;
+  border-radius: 50%;
+  vertical-align: -4px;
+  background: #3df2ff;
+}
+.t-rubi  .swatch { background: #ff3d6e; }
+.theme-btn:hover { border-color: #33465f; }
+
+/* ============ SOBRE ============ */
+.about p { color: #8b9bb2; }
+.about b { color: #dfe7f1; }
+.credits {
+  margin: 10px 0;
+  padding-left: 20px;
+  color: #8b9bb2;
+  font-size: 14px;
+}
+.credits li { margin-bottom: 5px; }
+.credits b { color: #dfe7f1; }
+
+/* ============ RODAPE ============ */
+.foot {
+  padding: 14px 0 22px;
+  text-align: center;
+  font: 11px/1.4 Consolas, monospace;
+  letter-spacing: .1em;
+  color: #3d4b5e;
+}
+
+/* Pequenos ajustes de tela */
+@media (max-width: 560px) {
+  .hero h1 { font-size: 32px; }
+  .tile { -webkit-flex: 1 1 90%; flex: 1 1 90%; }
+}
