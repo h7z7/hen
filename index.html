@@ -3,149 +3,288 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>NEON HOST — PS4</title>
+    <title>H7 host</title>
     <link rel="icon" href="data:," />
-    <link rel="stylesheet" href="dashboard.css" />
+    <style>
+      /* H7 host. Preto, vermelho, sem brilho nem degrade. Sem grid, gap, clamp ou animacao (navegador do PS4). */
+      body, body[data-theme="neon"]  { --text:#f0f0f0; --muted:#8f8f8f; --line:#262626; --surface:#0e0e0e; --raise:#151515; --accent:#e5252f; --tint:#1d0709; --ink:#ffffff; --warn:#f0b24a; }
+      body[data-theme="rubi"]        { --accent:#d6143c; --tint:#200711; }
+      body[data-theme="brasil"]      { --accent:#19b35a; --tint:#05170d; }
+
+      html, html body { background:#000; }
+      html body {
+        margin:0; color:var(--text);
+        font:400 22px/1.5 Helvetica,Arial,sans-serif;
+        -webkit-font-smoothing:antialiased;
+      }
+      html body * { box-sizing:border-box; }
+      html body button { font-family:inherit; cursor:pointer; }
+      html body button:focus, html body input:focus { outline:3px solid var(--text); outline-offset:4px; }
+
+      /* logo PlayStation (Simple Icons, CC0), pintado com a cor do texto */
+      .ps { display:inline-block; background-color:currentColor; -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8.984 2.596v17.547l3.915 1.261V6.688c0-.69.304-1.151.794-.991.636.18.76.814.76 1.505v5.875c2.441 1.193 4.362-.002 4.362-3.152 0-3.237-1.126-4.675-4.438-5.827-1.307-.448-3.728-1.186-5.39-1.502zm4.656 16.241l6.296-2.275c.715-.258.826-.625.246-.818-.586-.192-1.637-.139-2.357.123l-4.205 1.5V14.98l.24-.085s1.201-.42 2.913-.615c1.696-.18 3.785.03 5.437.661 1.848.601 2.04 1.472 1.576 2.072-.465.6-1.622 1.036-1.622 1.036l-8.544 3.107V18.86zM1.807 18.6c-1.9-.545-2.214-1.668-1.352-2.32.801-.586 2.16-1.052 2.16-1.052l5.615-2.013v2.313L4.205 17c-.705.271-.825.632-.239.826.586.195 1.637.15 2.343-.12L8.247 17v2.074c-.12.03-.256.044-.39.073-1.939.331-3.996.196-6.038-.479z'/%3E%3C/svg%3E") center/contain no-repeat; mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8.984 2.596v17.547l3.915 1.261V6.688c0-.69.304-1.151.794-.991.636.18.76.814.76 1.505v5.875c2.441 1.193 4.362-.002 4.362-3.152 0-3.237-1.126-4.675-4.438-5.827-1.307-.448-3.728-1.186-5.39-1.502zm4.656 16.241l6.296-2.275c.715-.258.826-.625.246-.818-.586-.192-1.637-.139-2.357.123l-4.205 1.5V14.98l.24-.085s1.201-.42 2.913-.615c1.696-.18 3.785.03 5.437.661 1.848.601 2.04 1.472 1.576 2.072-.465.6-1.622 1.036-1.622 1.036l-8.544 3.107V18.86zM1.807 18.6c-1.9-.545-2.214-1.668-1.352-2.32.801-.586 2.16-1.052 2.16-1.052l5.615-2.013v2.313L4.205 17c-.705.271-.825.632-.239.826.586.195 1.637.15 2.343-.12L8.247 17v2.074c-.12.03-.256.044-.39.073-1.939.331-3.996.196-6.038-.479z'/%3E%3C/svg%3E") center/contain no-repeat; }
+
+      /* canto */
+      html body .topbar { display:flex; align-items:center; padding:28px 32px 0; background:none; border:0; }
+      html body .brand { display:flex; align-items:center; font:400 26px/1 Helvetica,Arial,sans-serif; letter-spacing:-.01em; color:var(--muted); }
+      html body .brand b { font-weight:800; color:var(--text); margin-right:.3em; }
+      html body .brand .ps { width:28px; height:28px; margin-right:12px; color:var(--accent); }
+      html body .dot { display:none; }
+
+      /* colunas */
+      html body main { max-width:640px; margin:0 auto; padding:16px 24px 16px; }
+      html body .page { display:none; }
+      html body .page.active { display:block; }
+      html body #page-home { text-align:center; }
+
+      html body .hero { margin:0 0 40px; padding:0; text-align:center; }
+      html body .hero h1 {
+        margin:0 0 10px; font:800 40px/1.05 Helvetica,Arial,sans-serif; letter-spacing:-.03em;
+        text-transform:none; color:var(--text); text-shadow:none;
+      }
+      html body .sub { margin:0; color:var(--muted); font:400 20px/1.4 Helvetica,Arial,sans-serif; text-align:center; }
+      html body .sub b { color:var(--text); font-weight:400; }
+
+      /* botao de iniciar: so o logo */
+      html body .start-card { max-width:none; margin:0; padding:0; background:none; border:0; border-radius:0; text-align:center; }
+      html body .btn-start {
+        display:block; position:relative; width:200px; height:200px; margin:10px auto 0; padding:0;
+        background:var(--accent); border:0; border-radius:44px; box-shadow:0 0 0 8px #000, 0 0 0 10px var(--accent); text-shadow:none;
+        font-size:0; line-height:0; color:transparent; letter-spacing:0;
+      }
+      html body .btn-start::before {
+        content:""; position:absolute; left:50%; top:50%; width:112px; height:112px; margin:-56px 0 0 -56px;
+        background-color:var(--ink); -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8.984 2.596v17.547l3.915 1.261V6.688c0-.69.304-1.151.794-.991.636.18.76.814.76 1.505v5.875c2.441 1.193 4.362-.002 4.362-3.152 0-3.237-1.126-4.675-4.438-5.827-1.307-.448-3.728-1.186-5.39-1.502zm4.656 16.241l6.296-2.275c.715-.258.826-.625.246-.818-.586-.192-1.637-.139-2.357.123l-4.205 1.5V14.98l.24-.085s1.201-.42 2.913-.615c1.696-.18 3.785.03 5.437.661 1.848.601 2.04 1.472 1.576 2.072-.465.6-1.622 1.036-1.622 1.036l-8.544 3.107V18.86zM1.807 18.6c-1.9-.545-2.214-1.668-1.352-2.32.801-.586 2.16-1.052 2.16-1.052l5.615-2.013v2.313L4.205 17c-.705.271-.825.632-.239.826.586.195 1.637.15 2.343-.12L8.247 17v2.074c-.12.03-.256.044-.39.073-1.939.331-3.996.196-6.038-.479z'/%3E%3C/svg%3E") center/contain no-repeat; mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M8.984 2.596v17.547l3.915 1.261V6.688c0-.69.304-1.151.794-.991.636.18.76.814.76 1.505v5.875c2.441 1.193 4.362-.002 4.362-3.152 0-3.237-1.126-4.675-4.438-5.827-1.307-.448-3.728-1.186-5.39-1.502zm4.656 16.241l6.296-2.275c.715-.258.826-.625.246-.818-.586-.192-1.637-.139-2.357.123l-4.205 1.5V14.98l.24-.085s1.201-.42 2.913-.615c1.696-.18 3.785.03 5.437.661 1.848.601 2.04 1.472 1.576 2.072-.465.6-1.622 1.036-1.622 1.036l-8.544 3.107V18.86zM1.807 18.6c-1.9-.545-2.214-1.668-1.352-2.32.801-.586 2.16-1.052 2.16-1.052l5.615-2.013v2.313L4.205 17c-.705.271-.825.632-.239.826.586.195 1.637.15 2.343-.12L8.247 17v2.074c-.12.03-.256.044-.39.073-1.939.331-3.996.196-6.038-.479z'/%3E%3C/svg%3E") center/contain no-repeat;
+      }
+      html body .btn-start::after { content:none; animation:none; }
+      html body .btn-start:hover { background:var(--accent); }
+      html body .btn-start:disabled { opacity:.5; cursor:default; }
+      html body .caption { margin:26px 0 40px; color:var(--muted); font:400 20px/1.3 Helvetica,Arial,sans-serif; }
+
+      /* estado */
+      html body .status { margin:0 0 16px; padding:18px 20px; background:var(--surface); border:1px solid var(--line); border-radius:16px; text-align:center; }
+      html body .badges { display:block; }
+      html body .badge {
+        display:block; margin:0; padding:6px 0; border:0; border-radius:0; background:none;
+        color:var(--muted); font:400 19px/1.4 Helvetica,Arial,sans-serif; letter-spacing:0; text-transform:none;
+      }
+      html body .badge.on, html body .badge.fw { background:none !important; color:var(--text) !important; border-color:transparent !important; }
+      html body .badge.on::before, html body .badge.fw::before {
+        content:""; display:inline-block; width:10px; height:10px; margin-right:10px; border-radius:50%; background:var(--accent);
+      }
+      html body .badge.bad { color:var(--warn) !important; border-color:transparent !important; }
+      html body .note { margin:8px 0 0; color:var(--text); font:400 18px/1.4 Helvetica,Arial,sans-serif; }
+      html body .note:empty { display:none; }
+      html body .note.warn { color:var(--warn); }
+
+      /* payload */
+      html body .payload { margin:0 0 16px; padding:20px 14px 14px; background:var(--surface); border:1px solid var(--line); border-radius:16px; }
+      html body .card-label { margin:0 0 14px; color:var(--text); font:700 20px/1.3 Helvetica,Arial,sans-serif; letter-spacing:0; text-align:center; text-transform:none; }
+      html body .payload-pick { display:-webkit-flex; display:flex; margin:0; }
+      html body .opt {
+        display:block; -webkit-flex:1 1 0; flex:1 1 0; margin:0 6px 6px; padding:18px 12px; text-align:center;
+        background:var(--raise); color:var(--text); border:1px solid var(--line); border-radius:12px; box-shadow:none;
+      }
+      html body .opt:hover { background:var(--raise); border-color:var(--muted); }
+      html body .opt.sel { background:var(--tint) !important; border-color:var(--accent) !important; box-shadow:none !important; }
+      html body .opt-dot {
+        display:inline-block; vertical-align:middle; width:14px; height:14px; margin:0 10px 0 0; border:2px solid var(--muted); border-radius:50%;
+        background:none; box-shadow:none;
+      }
+      html body .opt.sel .opt-dot { border-color:var(--accent) !important; background:var(--accent) !important; box-shadow:none !important; }
+      html body .opt-body { display:inline; }
+      html body .opt-body b { display:inline; font:700 22px/1.3 Helvetica,Arial,sans-serif; color:var(--text); }
+      html body .opt-body b::before, html body .opt:not(.sel) .opt-body b::before { content:none; }
+      html body .opt-body small { display:block; margin-top:4px; color:var(--muted); font:400 15px/1.3 Helvetica,Arial,sans-serif; }
+
+      html body .auto-line { display:-webkit-flex; display:flex; -webkit-align-items:center; align-items:center; -webkit-justify-content:center; justify-content:center; margin-top:22px; color:var(--muted); font:400 18px/1.3 Helvetica,Arial,sans-serif; }
+      html body .auto-line input { width:18px; height:18px; margin:0 12px 0 0; }
+
+      /* menu */
+      html body .grid { display:-webkit-flex; display:flex; -webkit-flex-wrap:wrap; flex-wrap:wrap; -webkit-justify-content:center; justify-content:center; margin:40px -6px 0; }
+      html body .tile {
+        display:block; -webkit-flex:1 1 130px; flex:1 1 130px; margin:6px; padding:18px 12px; text-align:center;
+        background:var(--surface); color:var(--text); border:1px solid var(--line); border-radius:14px; box-shadow:none;
+      }
+      html body .tile:hover, html body .tile:focus { background:var(--surface); border-color:var(--accent); }
+      html body .tile-ico { display:none; }
+      html body .tile-txt { display:block; }
+      html body .tile-txt b { display:block; color:var(--text); font:700 19px/1.3 Helvetica,Arial,sans-serif; }
+      html body .tile-txt small { display:block; margin-top:2px; color:var(--muted); font:400 14px/1.3 Helvetica,Arial,sans-serif; }
+
+      /* subpaginas */
+      html body .page h2 { margin:24px 0 28px; padding:0; border:0 !important; color:var(--text) !important; font:800 38px/1.1 Helvetica,Arial,sans-serif; letter-spacing:-.025em; }
+      html body .list { margin:0; background:var(--surface); border:1px solid var(--line); border-radius:16px; }
+      html body .item { padding:16px 20px; border-bottom:1px solid var(--line); background:none; }
+      html body .item:last-child { border-bottom:0; }
+      html body .item b { display:block; color:var(--text); font:700 21px/1.35 Helvetica,Arial,sans-serif; }
+      html body .item span { display:block; color:var(--muted); font:400 17px/1.4 Helvetica,Arial,sans-serif; }
+      html body .hint { max-width:60ch; margin:24px 0 0; color:var(--muted); font:400 17px/1.5 Helvetica,Arial,sans-serif; }
+      html body .hint b { color:var(--text); font-weight:700; }
+
+      html body .diag {
+        margin:0 0 20px; padding:18px; max-height:50vh; overflow:auto; white-space:pre-wrap;
+        background:var(--surface); color:var(--text); border:1px solid var(--line); border-radius:16px;
+        font:400 16px/1.55 Consolas,"DejaVu Sans Mono","Courier New",monospace;
+      }
+      html body .row { display:-webkit-flex; display:flex; -webkit-flex-wrap:wrap; flex-wrap:wrap; }
+      html body .btn-small {
+        margin:0 12px 12px 0; padding:12px 22px; background:var(--raise); color:var(--text);
+        border:1px solid var(--line); border-radius:10px; font:400 18px/1.2 Helvetica,Arial,sans-serif;
+      }
+      html body .btn-small:hover { border-color:var(--accent); }
+
+      html body .btn-back {
+        display:inline-block; margin-top:40px; padding:10px 0; background:none; border:0; border-radius:0;
+        color:var(--muted); font:400 19px/1.2 Helvetica,Arial,sans-serif;
+      }
+      html body .btn-back::before { content:"\2190\00a0\00a0"; }
+      html body .btn-back:hover { color:var(--text); text-decoration:underline; }
+
+      html body .theme-list { background:var(--surface); border:1px solid var(--line); border-radius:16px; }
+      html body .theme-btn {
+        display:-webkit-flex; display:flex; -webkit-align-items:center; align-items:center; width:100%; margin:0; padding:18px 20px; text-align:left;
+        background:none; color:var(--text); border:0; border-bottom:1px solid var(--line); border-radius:0;
+        font:700 21px/1.2 Helvetica,Arial,sans-serif;
+      }
+      html body .theme-btn:last-child { border-bottom:0; }
+      html body .theme-btn.sel::after { content:"ativo"; margin-left:auto; color:var(--muted); font:400 17px/1 Helvetica,Arial,sans-serif; }
+      html body .swatch { -webkit-flex:none; flex:none; width:18px; height:18px; margin-right:16px; border:0; border-radius:50%; }
+      html body .t-neon .swatch { background:#e5252f; }
+      html body .t-rubi .swatch { background:#d6143c; }
+      html body .t-brasil .swatch { background:#19b35a; }
+
+      html body .about p { max-width:60ch; margin:0 0 20px; }
+      html body .credits { margin:0 0 8px; padding:0; list-style:none; background:var(--surface); border:1px solid var(--line); border-radius:16px; }
+      html body .credits li { padding:14px 20px; border-bottom:1px solid var(--line); color:var(--muted); font-size:18px; }
+      html body .credits li:last-child { border-bottom:0; }
+      html body .credits li b { color:var(--text); font-weight:700; }
+
+      html body .foot { max-width:640px; margin:0 auto; padding:32px 24px 48px; text-align:center; color:var(--muted); font:400 15px/1.3 Helvetica,Arial,sans-serif; }
+
+      @media (max-width:560px) {
+        html body { font-size:18px; }
+        html body .hero h1 { font-size:32px; }
+        html body .payload-pick { display:block; }
+        html body .opt { margin:0 0 8px; }
+        html body .page h2 { font-size:30px; }
+      }
+    </style>
   </head>
   <body data-theme="neon">
-    <!-- ================= TOPO ================= -->
     <header class="topbar">
-      <div class="brand"><span class="dot"></span> NEON <b>HOST</b></div>
-      <div class="badges">
-        <span id="netBadge" class="badge">…</span>
-        <span id="fwBadge" class="badge">…</span>
-      </div>
+      <div class="brand"><i class="ps"></i><b>H7</b>host</div>
     </header>
 
     <main id="main">
-      <!-- ================= HOME ================= -->
       <section id="page-home" class="page active">
         <div class="hero">
-          <p class="kicker">CENTRO DE COMANDO / BX-Edition</p>
-          <h1>PRONTO PARA<br /><span class="glow">DESBLOQUEAR</span></h1>
-          <p class="sub">Host pessoal de desbloqueio para PlayStation 4<br />Firmwares <b>12.00 &ndash; 14.02</b></p>
+          <h1>Desbloqueio do PS4</h1>
+          <p class="sub">Firmware <b>12.00 a 14.02</b> &middot; exploit p&uacute;blico de kernel</p>
         </div>
 
         <div class="start-card">
-          <p class="card-label">PAYLOAD</p>
-          <div class="payload-pick">
-            <button type="button" class="opt sel" data-payload="goldhen">
-              <span class="opt-dot"></span>
-              <span class="opt-body"><b>GoldHEN</b><small>v2.4b18 &middot; recomendado</small></span>
-            </button>
-            <button type="button" class="opt" data-payload="hen">
-              <span class="opt-dot"></span>
-              <span class="opt-body"><b>PS4-HEN</b><small>alternativa</small></span>
-            </button>
+          <button id="startBtn" class="btn-start" type="button" aria-label="Iniciar desbloqueio">Iniciar</button>
+          <p class="caption">Pressione para iniciar</p>
+
+          <div class="status">
+            <div class="badges">
+              <span id="netBadge" class="badge">&hellip;</span>
+              <span id="fwBadge" class="badge">&hellip;</span>
+            </div>
+            <p id="countdown" class="note"></p>
+            <p id="cacheNote" class="note"></p>
+            <p id="startWarn" class="note warn"></p>
           </div>
 
-          <button id="startBtn" class="btn-start" type="button">&#9654; INICIAR DESBLOQUEIO</button>
+          <div class="payload">
+            <p class="card-label">Escolha seu HEN</p>
+            <div class="payload-pick">
+              <button type="button" class="opt sel" data-payload="goldhen">
+                <span class="opt-dot"></span>
+                <span class="opt-body"><b>GoldHEN</b><small>v2.4b18, recomendado</small></span>
+              </button>
+              <button type="button" class="opt" data-payload="hen">
+                <span class="opt-dot"></span>
+                <span class="opt-body"><b>PS4-HEN</b><small>alternativa</small></span>
+              </button>
+            </div>
+          </div>
 
           <label class="auto-line">
             <input type="checkbox" id="autoChk" />
-            <span>Auto-iniciar em 5 segundos</span>
+            <span>Iniciar sozinho em 5 segundos</span>
           </label>
-          <p id="countdown" class="note"></p>
-          <p id="cacheNote" class="note"></p>
-          <p id="startWarn" class="note warn"></p>
         </div>
 
         <nav class="grid">
           <button class="tile" type="button" data-go="tools">
-            <span class="tile-ico">&#9638;</span><span class="tile-txt"><b>Ferramentas</b><small>Payloads e portas</small></span>
+            <span class="tile-txt"><b>Ferramentas</b><small>payloads e portas</small></span>
           </button>
           <button class="tile" type="button" data-go="system">
-            <span class="tile-ico">&#9881;</span><span class="tile-txt"><b>Sistema</b><small>Diagnóstico do host</small></span>
+            <span class="tile-txt"><b>Sistema</b><small>diagn&oacute;stico</small></span>
           </button>
           <button class="tile" type="button" data-go="theme">
-            <span class="tile-ico">&#9672;</span><span class="tile-txt"><b>Temas</b><small>Alterar visual</small></span>
+            <span class="tile-txt"><b>Temas</b><small>cor de destaque</small></span>
           </button>
           <button class="tile" type="button" data-go="about">
-            <span class="tile-ico">&#9432;</span><span class="tile-txt"><b>Sobre</b><small>Projeto e créditos</small></span>
+            <span class="tile-txt"><b>Sobre</b><small>projeto e cr&eacute;ditos</small></span>
           </button>
         </nav>
       </section>
 
-      <!-- ================= FERRAMENTAS ================= -->
       <section id="page-tools" class="page">
         <h2>Ferramentas</h2>
         <div class="list">
-          <div class="item">
-            <b>&#9654; Iniciar desbloqueio</b>
-            <span>Roda a cadeia Afterglow e carrega o HEN escolhido</span>
-          </div>
-          <div class="item">
-            <b>&#128274; Elf Loader &mdash; porta 9021</b>
-            <span>Envio de payloads ELF pelo console (local)</span>
-          </div>
-          <div class="item">
-            <b>&#128274; BinLoader &mdash; porta 9090</b>
-            <span>Recurso de envio de binários do GoldHEN</span>
-          </div>
-          <div class="item">
-            <b>&#128190; FTP &mdash; porta 2121</b>
-            <span>Transferência de arquivos após ativar o GoldHEN</span>
-          </div>
-          <div class="item">
-            <b>&#128230; Instalação de PKG</b>
-            <span>Disponível em Configura&ccedil;&otilde;es &rarr; Debug do GoldHEN</span>
-          </div>
+          <div class="item"><b>Iniciar</b><span>Roda a cadeia de desbloqueio e carrega o HEN escolhido</span></div>
+          <div class="item"><b>Elf Loader, porta 9021</b><span>Envio de payloads ELF pelo console (local)</span></div>
+          <div class="item"><b>BinLoader, porta 9090</b><span>Envio de bin&aacute;rios pelo GoldHEN</span></div>
+          <div class="item"><b>FTP, porta 2121</b><span>Transfer&ecirc;ncia de arquivos depois de ativar o GoldHEN</span></div>
+          <div class="item"><b>Instala&ccedil;&atilde;o de PKG</b><span>Em Configura&ccedil;&otilde;es, Debug do GoldHEN</span></div>
         </div>
-        <p class="hint">As portas s&atilde;o abertas <b>depois</b> que o HEN carrega com sucesso.</p>
-        <button class="btn-back" type="button" data-go="home">&larr; Voltar</button>
+        <p class="hint">As portas s&oacute; abrem <b>depois</b> que o HEN carrega com sucesso.</p>
+        <button class="btn-back" type="button" data-go="home">Voltar</button>
       </section>
 
-      <!-- ================= SISTEMA ================= -->
       <section id="page-system" class="page">
-        <h2>Sistema &mdash; Diagn&oacute;stico</h2>
+        <h2>Sistema</h2>
         <pre id="diag" class="diag">Carregando&hellip;</pre>
         <div class="row">
           <button id="diagRefresh" class="btn-small" type="button">Atualizar</button>
           <button id="diagCopy" class="btn-small" type="button">Copiar relat&oacute;rio</button>
         </div>
-        <p class="hint">Relat&oacute;rio local: nada &eacute; enviado automaticamente.</p>
-        <button class="btn-back" type="button" data-go="home">&larr; Voltar</button>
+        <p class="hint">O relat&oacute;rio fica no aparelho. Nada &eacute; enviado automaticamente.</p>
+        <button class="btn-back" type="button" data-go="home">Voltar</button>
       </section>
 
-      <!-- ================= TEMAS ================= -->
       <section id="page-theme" class="page">
         <h2>Temas</h2>
         <div class="theme-list">
-          <button class="theme-btn t-neon" type="button" data-theme="neon">
-            <span class="swatch"></span> Neon
-          </button>
-          <button class="theme-btn t-rubi" type="button" data-theme="rubi">
-            <span class="swatch"></span> Rubi
-          </button>
-          <button class="theme-btn t-brasil" type="button" data-theme="brasil">
-            <span class="swatch"></span> Brasil
-          </button>
+          <button class="theme-btn t-neon sel" type="button" data-theme="neon"><span class="swatch"></span>Neon</button>
+          <button class="theme-btn t-rubi" type="button" data-theme="rubi"><span class="swatch"></span>Rubi</button>
+          <button class="theme-btn t-brasil" type="button" data-theme="brasil"><span class="swatch"></span>Brasil</button>
         </div>
-        <button class="btn-back" type="button" data-go="home">&larr; Voltar</button>
+        <button class="btn-back" type="button" data-go="home">Voltar</button>
       </section>
 
-      <!-- ================= SOBRE ================= -->
       <section id="page-about" class="page">
         <h2>Sobre</h2>
         <div class="about">
-          <p><b>NEON HOST</b> &mdash; painel pessoal de desbloqueio para PS4,
-          constru&iacute;do sobre a cadeia de exploit <b>Afterglow</b>.</p>
+          <p><b>H7 host</b> &eacute; um painel pessoal de desbloqueio para PS4, constru&iacute;do sobre um exploit p&uacute;blico de kernel para o navegador do console.</p>
           <ul class="credits">
-            <li><b>Afterglow</b> (WebKit + kernel) &mdash; well0nez &amp; m0zz</li>
-            <li><b>raw13g host</b> (base do jb) &mdash; raw13g</li>
-            <li><b>GoldHEN</b> &mdash; SiSTRo e equipe</li>
-            <li><b>PS4-HEN</b> &mdash; equipe HEN</li>
-            <li><b>Licen&ccedil;a:</b> AGPL-3.0 (veja arquivo LICENSE)</li>
+            <li><b>Afterglow</b> (WebKit e kernel): well0nez e m0zz</li>
+            <li><b>raw13g host</b> (base do jb): raw13g</li>
+            <li><b>GoldHEN</b>: SiSTRo e equipe</li>
+            <li><b>PS4-HEN</b>: equipe HEN</li>
+            <li><b>Licen&ccedil;a:</b> AGPL-3.0 (veja o arquivo LICENSE)</li>
           </ul>
-          <p class="hint">Uso pessoal no pr&oacute;prio console. N&atilde;o substitui
-          o site oficial do Afterglow. Reiniciar o console desativa o
-          desbloqueia (semi-tethered).</p>
+          <p class="hint">Uso pr&oacute;prio no pr&oacute;prio console. Reiniciar o console desativa o desbloqueio (semi-tethered).</p>
         </div>
-        <button class="btn-back" type="button" data-go="home">&larr; Voltar</button>
+        <button class="btn-back" type="button" data-go="home">Voltar</button>
       </section>
     </main>
 
-    <footer class="foot">NEON HOST &middot; motor Afterglow &middot; uso pessoal</footer>
+    <footer class="foot">H7 host &middot; uso pessoal &middot; PlayStation &eacute; marca da Sony Interactive Entertainment</footer>
 
     <script src="dashboard.js"></script>
   </body>

@@ -114,7 +114,14 @@
     var btns = document.querySelectorAll(".theme-btn");
     var i;
     for (i = 0; i < btns.length; i++) {
-      btns[i].className = "theme-btn" +
+      /* preserva as classes t-neon/t-rubi/t-brasil (cor da bolinha) */
+      var keep = "";
+      var parts = btns[i].className.split(/\s+/);
+      var p;
+      for (p = 0; p < parts.length; p++) {
+        if (parts[p].indexOf("t-") === 0) keep += " " + parts[p];
+      }
+      btns[i].className = "theme-btn" + keep +
         (btns[i].getAttribute("data-theme") === name ? " sel" : "");
     }
   }

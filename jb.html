@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>afterglow</title>
+    <title>H7 host</title>
     <!-- This page carries its own styles and starts its own module, and it
          loads NOTHING else. That duplicates a little of style.css, and it is
          deliberate: every subresource is one more allocation and one more
@@ -12,17 +12,17 @@
          shared stylesheet; this one may not. -->
     <style>
       :root {
-        --bg: #07090d;
-        --panel: #0b1017;
-        --sunk: #0a0e14;
-        --line: #1b2634;
-        --fg: #c9d4e2;
-        --bright: #eafcff;
-        --dim: #7b8aa0;
+        --bg: #000000;
+        --panel: #0e0e0e;
+        --sunk: #0a0a0a;
+        --line: #262626;
+        --fg: #f0f0f0;
+        --bright: #ffffff;
+        --dim: #8f8f8f;
         --faint: #4d5765;
-        --ok: #7cff6b;
+        --ok: #f0f0f0;
         --bad: #ff6b81;
-        --warn: #ffb04d;
+        --warn: #f0b24a;
         --sans: "Segoe UI", system-ui, sans-serif;
         --mono: Consolas, "DejaVu Sans Mono", monospace;
       }
@@ -45,11 +45,10 @@
         text-align: center;
       }
       #brand b {
-        color: #3df2ff;
+        color: #e5252f;
         font-size: 15px;
         font-weight: 700;
         letter-spacing: 0.14em;
-        text-shadow: 0 0 12px rgba(61, 242, 255, 0.55);
       }
       /* The live heap readout sits in the flow under the bar. Nothing here
          scrolls the document itself, so it stays in view without being
@@ -74,7 +73,7 @@
         height: 46px;
         margin: -23px 0 0 -23px;
         border: 4px solid var(--line);
-        border-top-color: #3df2ff;
+        border-top-color: #e5252f;
         border-radius: 50%;
         animation: spin 0.9s linear infinite;
       }
@@ -183,7 +182,7 @@
     <!-- jb.js owns the body class: .log while the step log is shown, .done or
          .fail once the chain has settled. The ids below are its contract --
          #ramBox, #msg, #state and #out are read by name. -->
-    <div id="brand"><b>NEON HOST</b></div>
+    <div id="brand"><b>H7 HOST</b></div>
     <div id="ramBox">RAM: checking...</div>
     <div id="spin"></div>
     <div id="msg">Restart your console</div>
@@ -191,7 +190,7 @@
       <div id="state"></div>
       <div id="out"></div>
     </div>
-    <p class="byline">by well0nez/m0zz</p>
+    <p class="byline">by well0nez/m0zz &middot; host by h7</p>
     <script type="module">
       import "./jb.js";
     </script>
