@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="pt-BR" manifest="cache.appcache">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>NEON HOST — Modelo Minimal</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="dashboard.css" />
+    <style>
+      /* MODELO MINIMAL — clean, tipografia forte, quase sem cor */
+      body { background: #0a0a0c; color: #e8e8ec; font-family: "Segoe UI", system-ui, sans-serif; }
+      .topbar { background: #0a0a0c; border-bottom: 1px solid #1c1c21; }
+      .brand { color: #f5f5f7; letter-spacing: .22em; font-weight: 300; }
+      .brand b { color: #f5f5f7 !important; font-weight: 600; }
+      .dot { background: #5e7ce2 !important; box-shadow: none !important; }
+      .badge { border: 1px solid #2a2a31; border-radius: 999px; color: #8a8a93; background: transparent; }
+      .badge.on { color: #7ee081 !important; border-color: #2f4a33 !important; }
+      .badge.fw { color: #8fa8ff !important; border-color: #2c3a66 !important; }
+      .badge.bad { color: #ff8fa3 !important; border-color: #5c2a35 !important; }
+
+      .hero { text-align: center; padding: 40px 0 10px; }
+      .kicker { color: #55555f; letter-spacing: .4em; font-size: 10px; }
+      .hero h1 {
+        font-size: 52px; font-weight: 200; letter-spacing: .12em;
+        color: #f5f5f7; line-height: 1.1;
+      }
+      .glow { color: #8fa8ff !important; text-shadow: none !important; font-weight: 400; }
+      .sub { color: #6a6a74; margin-top: 18px; }
+      .sub b { color: #a8a8b3; font-weight: 500; }
+
+      .start-card {
+        max-width: 420px; background: #101014; border: 1px solid #22222a;
+        border-radius: 14px; padding: 26px 24px 20px; text-align: center;
+      }
+      .card-label { color: #55555f; letter-spacing: .35em; }
+      .payload-pick { text-align: left; }
+      .opt {
+        display: -webkit-flex; display: flex; -webkit-align-items: center; align-items: center;
+        background: #16161b; border: 1px solid #26262e; border-radius: 10px;
+        color: #c8c8d2; padding: 13px 15px; margin-bottom: 10px;
+      }
+      .opt-dot { border-radius: 50%; border-color: #3a3a44; background: #16161b; }
+      .opt-body b { color: #e8e8ec; font-weight: 500; }
+      .opt-body small { color: #6a6a74; }
+      .opt:hover { border-color: #3a3a46; background: #1a1a20; }
+      .opt.sel { border-color: #5e7ce2 !important; background: #171a28 !important; box-shadow: none; }
+      .opt.sel .opt-dot { background: #5e7ce2 !important; border-color: #5e7ce2 !important; box-shadow: none; }
+
+      .btn-start {
+        background: #f5f5f7; border: 1px solid #f5f5f7; border-radius: 999px;
+        color: #0a0a0c; font-weight: 600; letter-spacing: .18em; font-size: 14px;
+        box-shadow: none;
+      }
+      .btn-start:hover { background: #ffffff; box-shadow: 0 6px 30px rgba(255,255,255,.12); }
+      .auto-line { color: #6a6a74; font-size: 12.5px; margin-top: 4px; }
+      .note { color: #7ee081; }
+      .note.warn { color: #ffbf69; }
+
+      .grid { margin-top: 30px; }
+      .tile {
+        background: #101014; border: 1px solid #22222a; border-radius: 12px;
+        color: #a8a8b3;
+      }
+      .tile:hover { border-color: #3a3a46; background: #14141a; }
+      .tile-ico { color: #8fa8ff !important; width: 30px; }
+      .tile-txt b { color: #e8e8ec; font-weight: 500; }
+      .tile-txt small { color: #6a6a74; }
+
+      .page h2 { border-left: none; padding-left: 0; font-weight: 300; letter-spacing: .1em; color: #f5f5f7 !important; }
+      .page h2::before { content: ""; display: inline-block; width: 18px; height: 2px; background: #5e7ce2; margin-right: 12px; vertical-align: 6px; }
+      .btn-back, .btn-small { border-radius: 999px; }
+      .foot { color: #3a3a42; letter-spacing: .2em; }
+    </style>
+  </head>
+  <body data-theme="neon">
+    <header class="topbar">
+      <div class="brand"><span class="dot"></span> NEON <b>HOST</b></div>
+      <div class="badges">
+        <span id="netBadge" class="badge">…</span>
+        <span id="fwBadge" class="badge">…</span>
+      </div>
+    </header>
+
+    <main id="main">
+      <section id="page-home" class="page active">
+        <div class="hero">
+          <p class="kicker">PLAYSTATION 4 &middot; HOST PESSOAL</p>
+          <h1>PRONTO PARA<br /><span class="glow">DESBLOQUEAR</span></h1>
+          <p class="sub">Cadeia Afterglow &middot; firmwares <b>12.00 &ndash; 14.02</b></p>
+        </div>
+
+        <div class="start-card">
+          <p class="card-label">PAYLOAD</p>
+          <div class="payload-pick">
+            <button type="button" class="opt sel" data-payload="goldhen">
+              <span class="opt-dot"></span>
+              <span class="opt-body"><b>GoldHEN</b><small>v2.4b18 &middot; recomendado</small></span>
+            </button>
+            <button type="button" class="opt" data-payload="hen">
+              <span class="opt-dot"></span>
+              <span class="opt-body"><b>PS4-HEN</b><small>alternativa</small></span>
+            </button>
+          </div>
+
+          <button id="startBtn" class="btn-start" type="button">INICIAR DESBLOQUEIO</button>
+
+          <label class="auto-line">
+            <input type="checkbox" id="autoChk" />
+            <span>auto-iniciar em 5 segundos</span>
+          </label>
+          <p id="countdown" class="note"></p>
+          <p id="cacheNote" class="note"></p>
+          <p id="startWarn" class="note warn"></p>
+        </div>
+
+        <nav class="grid">
+          <button class="tile" type="button" data-go="tools">
+            <span class="tile-ico">&#9638;</span><span class="tile-txt"><b>Ferramentas</b><small>Payloads e portas</small></span>
+          </button>
+          <button class="tile" type="button" data-go="system">
+            <span class="tile-ico">&#9881;</span><span class="tile-txt"><b>Sistema</b><small>Diagnóstico do host</small></span>
+          </button>
+          <button class="tile" type="button" data-go="theme">
+            <span class="tile-ico">&#9672;</span><span class="tile-txt"><b>Temas</b><small>Alterar visual</small></span>
+          </button>
+          <button class="tile" type="button" data-go="about">
+            <span class="tile-ico">&#9432;</span><span class="tile-txt"><b>Sobre</b><small>Projeto e créditos</small></span>
+          </button>
+        </nav>
+      </section>
+
+      <section id="page-tools" class="page">
+        <h2>Ferramentas</h2>
+        <div class="list">
+          <div class="item"><b>&#9654; Iniciar desbloqueio</b><span>Roda a cadeia Afterglow e carrega o HEN escolhido</span></div>
+          <div class="item"><b>&#128274; Elf Loader &mdash; porta 9021</b><span>Envio de payloads ELF pelo console (local)</span></div>
+          <div class="item"><b>&#128274; BinLoader &mdash; porta 9090</b><span>Recurso de envio de binários do GoldHEN</span></div>
+          <div class="item"><b>&#128190; FTP &mdash; porta 2121</b><span>Transferência de arquivos após ativar o GoldHEN</span></div>
+          <div class="item"><b>&#128230; Instalação de PKG</b><span>Disponível em Configurações &rarr; Debug do GoldHEN</span></div>
+        </div>
+        <p class="hint">As portas s&atilde;o abertas <b>depois</b> que o HEN carrega com sucesso.</p>
+        <button class="btn-back" type="button" data-go="home">&larr; Voltar</button>
+      </section>
+
+      <section id="page-system" class="page">
+        <h2>Sistema &mdash; Diagn&oacute;stico</h2>
+        <pre id="diag" class="diag">Carregando&hellip;</pre>
+        <div class="row">
+          <button id="diagRefresh" class="btn-small" type="button">Atualizar</button>
+          <button id="diagCopy" class="btn-small" type="button">Copiar relat&oacute;rio</button>
+        </div>
+        <p class="hint">Relat&oacute;rio local: nada &eacute; enviado automaticamente.</p>
+        <button class="btn-back" type="button" data-go="home">&larr; Voltar</button>
+      </section>
+
+      <section id="page-theme" class="page">
+        <h2>Temas</h2>
+        <div class="theme-list">
+          <button class="theme-btn t-neon sel" type="button" data-theme="neon"><span class="swatch"></span> Neon</button>
+          <button class="theme-btn t-rubi" type="button" data-theme="rubi"><span class="swatch"></span> Rubi</button>
+          <button class="theme-btn t-brasil" type="button" data-theme="brasil"><span class="swatch"></span> Brasil</button>
+        </div>
+        <button class="btn-back" type="button" data-go="home">&larr; Voltar</button>
+      </section>
+
+      <section id="page-about" class="page">
+        <h2>Sobre</h2>
+        <div class="about">
+          <p><b>NEON HOST</b> &mdash; painel pessoal de desbloqueio para PS4,
+          constru&iacute;do sobre a cadeia de exploit <b>Afterglow</b>.</p>
+          <ul class="credits">
+            <li><b>Afterglow</b> (WebKit + kernel) &mdash; well0nez &amp; m0zz</li>
+            <li><b>raw13g host</b> (base do jb) &mdash; raw13g</li>
+            <li><b>GoldHEN</b> &mdash; SiSTRo e equipe</li>
+            <li><b>PS4-HEN</b> &mdash; equipe HEN</li>
+            <li><b>Licen&ccedil;a:</b> AGPL-3.0 (veja arquivo LICENSE)</li>
+          </ul>
+          <p class="hint">Uso pessoal no pr&oacute;prio console. Reiniciar o console desativa o
+          desbloqueio (semi-tethered).</p>
+        </div>
+        <button class="btn-back" type="button" data-go="home">&larr; Voltar</button>
+      </section>
+    </main>
+
+    <footer class="foot">NEON HOST &middot; minimal edition &middot; uso pessoal</footer>
+
+    <script src="dashboard.js"></script>
+  </body>
+</html>

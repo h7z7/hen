@@ -12,17 +12,17 @@
          shared stylesheet; this one may not. -->
     <style>
       :root {
-        --bg: #0b0d10;
-        --panel: #0e1116;
-        --sunk: #11151b;
-        --line: #1e2732;
-        --fg: #c8ced8;
-        --bright: #e6ebf2;
-        --dim: #7c8798;
+        --bg: #07090d;
+        --panel: #0b1017;
+        --sunk: #0a0e14;
+        --line: #1b2634;
+        --fg: #c9d4e2;
+        --bright: #eafcff;
+        --dim: #7b8aa0;
         --faint: #4d5765;
-        --ok: #7fd0a0;
-        --bad: #d08a7f;
-        --warn: #d8c07f;
+        --ok: #7cff6b;
+        --bad: #ff6b81;
+        --warn: #ffb04d;
         --sans: "Segoe UI", system-ui, sans-serif;
         --mono: Consolas, "DejaVu Sans Mono", monospace;
       }
@@ -45,10 +45,11 @@
         text-align: center;
       }
       #brand b {
-        color: var(--bright);
+        color: #3df2ff;
         font-size: 15px;
         font-weight: 700;
         letter-spacing: 0.14em;
+        text-shadow: 0 0 12px rgba(61, 242, 255, 0.55);
       }
       /* The live heap readout sits in the flow under the bar. Nothing here
          scrolls the document itself, so it stays in view without being
@@ -73,7 +74,7 @@
         height: 46px;
         margin: -23px 0 0 -23px;
         border: 4px solid var(--line);
-        border-top-color: var(--ok);
+        border-top-color: #3df2ff;
         border-radius: 50%;
         animation: spin 0.9s linear infinite;
       }
@@ -182,7 +183,7 @@
     <!-- jb.js owns the body class: .log while the step log is shown, .done or
          .fail once the chain has settled. The ids below are its contract --
          #ramBox, #msg, #state and #out are read by name. -->
-    <div id="brand"><b>afterglow</b></div>
+    <div id="brand"><b>NEON HOST</b></div>
     <div id="ramBox">RAM: checking...</div>
     <div id="spin"></div>
     <div id="msg">Restart your console</div>
