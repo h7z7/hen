@@ -66,15 +66,29 @@
     }
   }
 
-  /* ---------- escolhas (payload / autostart) ---------- */
-  function payload() {
-    var r = document.querySelector('input[name="payload"]:checked');
-    return r ? r.value : "goldhen";
+  /* ---------- escolhas (payload / autostart) ----------
+   * O radio nativo nao atualiza visualmente no navegador do PS4,
+   * entao a selecao e feita com botoes + classe .sel. */
+  var currentPayload = "goldhen";
+
+  function payload() { return currentPayload; }
+
+  function selectPayload(v) {
+    if (v !== "goldhen" && v !== "hen") return;
+    currentPayload = v;
+    var opts = document.querySelectorAll(".opt");
+    var i;
+    for (i = 0; i < opts.length; i++) {
+      var on = opts[i].getAttribute("data-payload") === v;
+      opts[i].className = "opt" + (on ? " sel" : "");
+      try { opts[i].setAttribute("aria-pressed", on ? "true" : "false"); }
+      catch (e) {}
+    }
   }
 
   function remember() {
     lsSet(STORE, JSON.stringify({
-      payload: payload(),
+      payload: currentPayload,
       autostart: document.getElementById("autoChk").checked
     }));
   }
@@ -85,9 +99,7 @@
     var saved = null;
     try { saved = JSON.parse(raw); } catch (e) { return; }
     if (saved.payload === "goldhen" || saved.payload === "hen") {
-      var r = document.querySelector(
-        'input[name="payload"][value="' + saved.payload + '"]');
-      if (r) r.checked = true;
+      selectPayload(saved.payload);
     }
     if (typeof saved.autostart === "boolean") {
       document.getElementById("autoChk").checked = saved.autostart;
@@ -267,9 +279,14 @@
       };
     }
 
-    /* payload + autostart */
-    var radios = document.querySelectorAll('input[name="payload"]');
-    for (i = 0; i < radios.length; i++) radios[i].onchange = remember;
+    /* payload (botoes .opt) + autostart */
+    var opts = document.querySelectorAll(".opt");
+    for (i = 0; i < opts.length; i++) {
+      opts[i].onclick = function () {
+        selectPayload(this.getAttribute("data-payload"));
+        remember();
+      };
+    }
     var auto = document.getElementById("autoChk");
     auto.onchange = function () {
       remember();

@@ -145,18 +145,39 @@ body[data-theme="brasil"] .t-brasil .swatch { background: linear-gradient(135deg
 .payload-pick { margin-bottom: 14px; }
 .opt {
   display: block;
+  width: 100%;
   margin: 0 0 8px;
-  padding: 9px 12px;
+  padding: 11px 13px;
   border: 1px solid #223044;
   border-radius: 6px;
   background: #0a0e14;
+  color: #c9d4e2;
+  font: inherit;
   cursor: pointer;
   text-align: left;
 }
-.opt input { margin-right: 9px; }
+/* bolinha indicadora (substitui o radio, que nao funciona bem no PS4) */
+.opt-dot {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin-right: 11px;
+  border: 2px solid #44536a;
+  border-radius: 50%;
+  vertical-align: -3px;
+  background: #0a0e14;
+}
 .opt-body b { display: block; font-size: 14px; color: #dfe7f1; }
 .opt-body small { color: #66778f; font-size: 12px; }
 .opt:hover { border-color: #33465f; }
+.opt:focus { outline: 2px solid #7b8aa0; outline-offset: 1px; }
+/* estado SELECIONADO — cor por tema (blocos direto, sem custom properties) */
+body[data-theme="neon"]  .opt.sel { border-color: #3df2ff; background: #0c1a22; }
+body[data-theme="neon"]  .opt.sel .opt-dot { background: #3df2ff; border-color: #3df2ff; box-shadow: 0 0 9px rgba(61,242,255,.8); }
+body[data-theme="rubi"]  .opt.sel { border-color: #ff3d6e; background: #1f0d14; }
+body[data-theme="rubi"]  .opt.sel .opt-dot { background: #ff3d6e; border-color: #ff3d6e; box-shadow: 0 0 9px rgba(255,61,110,.8); }
+body[data-theme="brasil"] .opt.sel { border-color: #2ee56b; background: #0c1c12; }
+body[data-theme="brasil"] .opt.sel .opt-dot { background: #2ee56b; border-color: #2ee56b; box-shadow: 0 0 9px rgba(46,229,107,.8); }
 
 .btn-start {
   display: block;
