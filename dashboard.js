@@ -198,7 +198,7 @@
     gone = true;
     stopClock();
 
-    var q = "log=1&afterglow=run";
+    var q = "afterglow=run";
     if (payload() === "hen") q += "&payload=hen.bin";
     else q += "&mode=goldhen";
     window.location.href = "jb.html?" + q;
@@ -330,8 +330,7 @@
   function warnIfNotPS4() {
     if (isPS4()) return;
     document.getElementById("startWarn").textContent =
-      "aviso: esta pagina nao foi aberta no PS4 - o desbloqueio so funciona " +
-      "no navegador do console.";
+      "aviso: abra esta pagina pelo navegador do console.";
   }
 
   /* ---------- init ---------- */

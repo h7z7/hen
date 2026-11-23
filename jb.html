@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" manifest="cache.appcache">
+<html lang="pt-BR" manifest="cache.appcache">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -39,7 +39,7 @@
         font: 15px/1.45 var(--sans);
       }
       #brand {
-        padding: 8px 10px;
+        padding: 10px 12px;
         border-bottom: 1px solid var(--line);
         background: var(--panel);
         text-align: center;
@@ -50,10 +50,10 @@
         font-weight: 700;
         letter-spacing: 0.14em;
       }
-      /* The live heap readout sits in the flow under the bar. Nothing here
-         scrolls the document itself, so it stays in view without being
-         positioned over the wordmark. */
+      /* The live heap readout sits in the flow under the bar in log mode;
+         hidden by default so the loading screen stays clean and discreet. */
       #ramBox {
+        display: none;
         overflow: hidden;
         padding: 5px 10px;
         border-bottom: 1px solid var(--line);
@@ -63,15 +63,18 @@
         text-overflow: ellipsis;
         white-space: nowrap;
       }
-      /* Running: a spinner under the bar. jb.js switches the body to .done,
+      body.log #ramBox {
+        display: block;
+      }
+      /* Running: a clean centered spinner. jb.js switches the body to .done,
          .fail or .log. */
       #spin {
         position: fixed;
-        top: calc(50% + 20px);
+        top: 50%;
         left: 50%;
-        width: 46px;
-        height: 46px;
-        margin: -23px 0 0 -23px;
+        width: 48px;
+        height: 48px;
+        margin: -24px 0 0 -24px;
         border: 4px solid var(--line);
         border-top-color: #e5252f;
         border-radius: 50%;
@@ -107,8 +110,18 @@
       body.done #msg {
         display: block;
         color: var(--ok);
+        font-size: 20px;
         font-weight: 700;
         letter-spacing: 2px;
+      }
+      body.done #msg::after {
+        content: "Pronto \2014 pressione o bot\00e3o PS";
+        display: block;
+        margin-top: 10px;
+        color: var(--dim);
+        font-size: 14px;
+        font-weight: 400;
+        letter-spacing: 0;
       }
       /* ?log=1 -- the full step log. Laid out with flex rather than by
          subtracting a header height from 100vh. */
@@ -182,10 +195,10 @@
     <!-- jb.js owns the body class: .log while the step log is shown, .done or
          .fail once the chain has settled. The ids below are its contract --
          #ramBox, #msg, #state and #out are read by name. -->
-    <div id="brand"><b>H7 HOST</b></div>
+    <div id="brand"><b>H7 PAINEL</b></div>
     <div id="ramBox">RAM: checking...</div>
     <div id="spin"></div>
-    <div id="msg">Restart your console</div>
+    <div id="msg">Tente novamente</div>
     <div id="wrap">
       <div id="state"></div>
       <div id="out"></div>
