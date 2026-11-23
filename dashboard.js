@@ -236,7 +236,7 @@
       window.localStorage.removeItem("__t");
     } catch (e) { storage = "bloqueado"; }
 
-    lines.push("NEON HOST - diagnostico");
+    lines.push("H7 PAINEL - diagnostico");
     lines.push("data: " + new Date().toISOString());
     lines.push("firmware: " + (v ? v + " (" +
       (SUPPORTED.indexOf(v) >= 0 ? "suportado" : "NAO listado") + ")"
@@ -247,7 +247,7 @@
     lines.push("localStorage: " + storage);
     lines.push("idioma: " + (navigator.language || "?"));
     lines.push("tela: " + window.screen.width + "x" + window.screen.height);
-    lines.push("payload: " + payload());
+    lines.push("modo: " + (payload() === "hen" ? "alternativo" : "padrao"));
     return lines.join("\n");
   }
 
