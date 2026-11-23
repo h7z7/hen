@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>H7 host</title>
+    <title>H7 Painel</title>
     <link rel="icon" href="data:," />
     <style>
       /* H7 host. Preto, vermelho, sem brilho nem degrade. Sem grid, gap, clamp ou animacao (navegador do PS4). */
@@ -173,18 +173,18 @@
   </head>
   <body data-theme="neon">
     <header class="topbar">
-      <div class="brand"><i class="ps"></i><b>H7</b>host</div>
+      <div class="brand"><i class="ps"></i><b>H7</b>Painel</div>
     </header>
 
     <main id="main">
       <section id="page-home" class="page active">
         <div class="hero">
-          <h1>Desbloqueio do PS4</h1>
-          <p class="sub">Firmware <b>12.00 a 14.02</b> &middot; exploit p&uacute;blico de kernel</p>
+          <h1>Painel de Controle</h1>
+          <p class="sub">Toque para iniciar e acompanhe o status abaixo</p>
         </div>
 
         <div class="start-card">
-          <button id="startBtn" class="btn-start" type="button" aria-label="Iniciar desbloqueio">Iniciar</button>
+          <button id="startBtn" class="btn-start" type="button" aria-label="Iniciar">Iniciar</button>
           <p class="caption">Pressione para iniciar</p>
 
           <div class="status">
@@ -198,15 +198,15 @@
           </div>
 
           <div class="payload">
-            <p class="card-label">Escolha seu HEN</p>
+            <p class="card-label">Escolha o modo</p>
             <div class="payload-pick">
               <button type="button" class="opt sel" data-payload="goldhen">
                 <span class="opt-dot"></span>
-                <span class="opt-body"><b>GoldHEN</b><small>v2.4b18, recomendado</small></span>
+                <span class="opt-body"><b>Padrão</b><small>recomendado</small></span>
               </button>
               <button type="button" class="opt" data-payload="hen">
                 <span class="opt-dot"></span>
-                <span class="opt-body"><b>PS4-HEN</b><small>alternativa</small></span>
+                <span class="opt-body"><b>Alternativo</b><small>modo B</small></span>
               </button>
             </div>
           </div>
@@ -219,7 +219,7 @@
 
         <nav class="grid">
           <button class="tile" type="button" data-go="tools">
-            <span class="tile-txt"><b>Ferramentas</b><small>payloads e portas</small></span>
+            <span class="tile-txt"><b>Ferramentas</b><small>recursos e portas</small></span>
           </button>
           <button class="tile" type="button" data-go="system">
             <span class="tile-txt"><b>Sistema</b><small>diagn&oacute;stico</small></span>
@@ -236,13 +236,13 @@
       <section id="page-tools" class="page">
         <h2>Ferramentas</h2>
         <div class="list">
-          <div class="item"><b>Iniciar</b><span>Roda a cadeia de desbloqueio e carrega o HEN escolhido</span></div>
-          <div class="item"><b>Elf Loader, porta 9021</b><span>Envio de payloads ELF pelo console (local)</span></div>
-          <div class="item"><b>BinLoader, porta 9090</b><span>Envio de bin&aacute;rios pelo GoldHEN</span></div>
-          <div class="item"><b>FTP, porta 2121</b><span>Transfer&ecirc;ncia de arquivos depois de ativar o GoldHEN</span></div>
-          <div class="item"><b>Instala&ccedil;&atilde;o de PKG</b><span>Em Configura&ccedil;&otilde;es, Debug do GoldHEN</span></div>
+          <div class="item"><b>Iniciar</b><span>Executa a sequência carregando o modo escolhido</span></div>
+          <div class="item"><b>Porta 9021</b><span>Envio de arquivos pelo console (local)</span></div>
+          <div class="item"><b>Porta 9090</b><span>Envio de binários no modo Padrão</span></div>
+          <div class="item"><b>Porta 2121</b><span>Transferência de arquivos depois de ativar o modo Padrão</span></div>
+          <div class="item"><b>Instalação de pacotes</b><span>Em Configurações, Debug do modo Padrão</span></div>
         </div>
-        <p class="hint">As portas s&oacute; abrem <b>depois</b> que o HEN carrega com sucesso.</p>
+        <p class="hint">As portas s&oacute; abrem <b>depois</b> que o modo escolhido carrega com sucesso.</p>
         <button class="btn-back" type="button" data-go="home">Voltar</button>
       </section>
 
@@ -270,7 +270,7 @@
       <section id="page-about" class="page">
         <h2>Sobre</h2>
         <div class="about">
-          <p><b>H7 host</b> &eacute; um painel pessoal de desbloqueio para PS4, constru&iacute;do sobre um exploit p&uacute;blico de kernel para o navegador do console.</p>
+          <p><b>H7</b> &eacute; um painel pessoal para PS4, constru&iacute;do sobre o exploit p&uacute;blico de kernel Afterglow (suporte a firmwares 12.00 a 14.02) para o navegador do console. O modo Padr&atilde;o corresponde ao GoldHEN v2.4b18, e o Alternativo ao PS4-HEN.</p>
           <ul class="credits">
             <li><b>Afterglow</b> (WebKit e kernel): well0nez e m0zz</li>
             <li><b>raw13g host</b> (base do jb): raw13g</li>
@@ -284,7 +284,7 @@
       </section>
     </main>
 
-    <footer class="foot">H7 host &middot; uso pessoal &middot; PlayStation &eacute; marca da Sony Interactive Entertainment</footer>
+    <footer class="foot">H7 &middot; uso pessoal</footer>
 
     <script src="dashboard.js"></script>
   </body>
